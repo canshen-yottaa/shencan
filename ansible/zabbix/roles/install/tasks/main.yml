@@ -44,3 +44,6 @@
 
  - include: tmu.yml
    when: apps.stdout == "tmu"
+
+ - name: make sure zabbix-agent running
+   service: name=zabbix-agent state=started enabled=yes
