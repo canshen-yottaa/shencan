@@ -1,0 +1,3 @@
+---
+ - name: clean log crontab
+   cron: name="zabbix log clean crontab" minute="0" job="find /tmp -name zabbix* -mtime +3 -exec rm -f {} \;" user=root

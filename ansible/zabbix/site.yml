@@ -1,0 +1,6 @@
+---
+  - hosts: yottaa.shencan.net
+    roles:
+      - epel
+      - install
+      - key

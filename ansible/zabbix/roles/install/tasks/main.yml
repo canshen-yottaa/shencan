@@ -1,0 +1,46 @@
+---
+ - name: Yum install zabbix-agent
+   yum : name={{ item }} state=present
+   with_items:
+   - zabbix-agent
+
+ - name: make sure /etc/zabbix directory
+   file: name=/etc/zabbix state=directory
+
+ - name: copy zabbix_agentd.conf file
+   template: src=zabbix_agentd_conf.j2  dest=/etc/zabbix/zabbix_agentd.conf
+   notify: restart zabbix-agent
+
+ - name: copy discover_disk.sh files
+   copy: src=discover_disk.sh dest=/etc/zabbix/discover_disk.sh  mode=0777
+
+ - name: copy  zabbix_function.py files
+   copy: src=zabbix_function.py dest=/etc/zabbix/zabbix_function.py mode=0777
+
+ - name: set zabbix crontab
+   cron: name="zabbix crontab" minute="*/2" job="nohup iostat -m -x -d >/tmp/iostat_output" user=root
+
+ - name: custom geographic  facter
+   shell: cat /etc/yottaa |grep role |cut -d"=" -f2
+   register: datacenter
+
+ - name: copy /etc/zabbix/zabbix_socket_sender.py when role=ap
+   copy: src=zabbix_socket_sender.py   dest=/etc/zabbix/zabbix_socket_sender-ap.py  mode=0777
+   when: datacenter.stdout == "ap"
+
+ - name: copy /etc/zabbix/zabbix_socket_sender.py  when role is not ap
+   copy: src=zabbix_socket_sender-ap.py  dest=/etc/zabbix/zabbix_socket_sender.py mode=0777
+   when: datacenter.stdout != "ap"
+
+ - name: custom app facter
+   shell: cat /etc/yottaa |grep app |cut -d"=" -f2
+   register: apps
+ 
+ - include: lb.yml
+   when: apps.stdout == "lb"
+
+ - include: tpu.yml
+   when: apps.stdout == "tpu"
+
+ - include: tmu.yml
+   when: apps.stdout == "tmu"

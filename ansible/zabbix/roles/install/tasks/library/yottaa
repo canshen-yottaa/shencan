@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e 
+source $1 
+
+CHANGED="False"
+
+if  [ ! -z "$type" ];
+then
+
+type=`cat /etc/yottaa |grep "$type"|awk -F"=" '{print $2}'`
+
+host=`hostname`
+
+CHANGED="True"
+
+fi
+
+echo "type=$type  changed=${CHANGED}"
+exit 0

@@ -1,0 +1,5 @@
+---
+  - name: Create the repository for EPEL
+    copy: src=zabbix.repo dest=/etc/yum.repos.d/zabbix.repo
+  - name: Create the GPG key for EPEL
+    copy: src=RPM-GPG-KEY-ZABBIX dest=/etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX

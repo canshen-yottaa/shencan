@@ -1,0 +1,6 @@
+---
+ - name: copy /etc/zabbix/zabbix_tcp_statists.py files
+   copy: src=zabbix_tcp_statists.py  dest=/etc/zabbix/zabbix_tcp_statists.py  mode=0775
+
+ - name: tcp-statists crontab
+   cron: name="zabbix tcp_statists crontab" minute="*/1" job="/usr/bin/python /etc/zabbix/zabbix_tcp_statists.py" user=root
