@@ -1,0 +1,22 @@
+---
+  - name: Yum install packages
+    yum:  name={{ item }} state=present
+    with_items:
+     - openvpn
+     - openvpn-auth-ldap
+     - easy-rsa
+
+  - name: create vpnid files
+    shell: /bin/echo {{ vpnid }} > /tmp/vpnid 
+
+  - name: check iptables nat rule
+    shell: /sbin/iptables -t nat -vnL |/bin/grep {{ network }}| /usr/bin/wc -l
+    register: iptables
+
+  - name: set iptables rule
+    shell: /sbin/iptables -t nat -I POSTROUTING -s {{ network }}/{{ netmask }}  -o {{ device }} -j MASQUERADE && /sbin/service iptables save     
+    when: iptables.stdout == "0"
+  
+  - name: change net.ipv4.ip_forward
+    shell: /bin/sed -i 's/net.ipv4.ip_forward = 0/net.ipv4.ip_forward = 1/g' /etc/sysctl.conf  
+    
