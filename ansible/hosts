@@ -1,1 +1,3 @@
-yottaa.shencan.net  ansible_ssh_host=192.168.1.107  ansible_ssh_user=root  ansible_ssh_pass="123456"  publicip=114.114.114.114
+#HKVPN  ansible_ssh_host=23.97.73.97  ansible_ssh_user=root  ansible_ssh_pass="yottaarific123$%^"
+#yottaa.shencan.net  ansible_ssh_host=192.168.1.107  ansible_ssh_user=root  ansible_ssh_pass="123456"  publicip=114.114.114.114
+JPVPN  ansible_ssh_host=vpn-jp.yottaa.com ansible_ssh_user=yadmin  ansible_ssh_private_key_file=/Users/shencan/Desktop/shencangit/ansible/openvpn-ldap/key.pub  
