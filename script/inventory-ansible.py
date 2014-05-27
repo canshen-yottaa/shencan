@@ -7,8 +7,8 @@ import json
 import requests
 def lists():
     data_center={'us-west':02,'ap-southeast':04,'us-east':01,'eu-west':03,'us-chicago':'08','us-miami':'09'}
-    url = "http://monitor.yottaa.com:8000/api/instance/instances/?format=json&limit=0&production_state=1"
-    r = requests.get(url, auth=('api', 'AtynccSCifmmgIoR'))
+    url = "http://XXXXXX:8000/api/instance/instances/?format=json&limit=0&production_state=1"
+    r = requests.get(url, auth=('XXXXX', 'XXXXXXX'))
     data_string= json.loads(r.text)
     r = {}
     for item in data_string['objects']:
@@ -45,8 +45,8 @@ def lists():
     
 
 def hosts(name):
-    url = "http://monitor.yottaa.com:8000/api/instance/instances/?format=json&limit=0&production_state=1&hostname=%s" % name
-    r = requests.get(url, auth=('api', 'AtynccSCifmmgIoR'))
+    url = "http://XXXXXXXX:8000/api/instance/instances/?format=json&limit=0&production_state=1&hostname=%s" % name
+    r = requests.get(url, auth=('XXXX', 'XXXXXXX'))
     data_string= json.loads(r.text)
     result = data_string['objects'][0]
     ip= result['public_ip']

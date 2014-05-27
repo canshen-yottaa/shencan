@@ -16,8 +16,8 @@ def startinfo():
     print '\033[0m'
 
 def listtype(a,b,c='public_ip'):
-      url = "http://monitor.yottaa.com:8000/api/instance/instances/?format=json&limit=0&production_state=%d&role=%d" %  (a,b)
-      r = requests.get(url, auth=('api', 'AtynccSCifmmgIoR'))
+      url = "http://XXXXXXX:8000/api/instance/instances/?format=json&limit=0&production_state=%d&role=%d" %  (a,b)
+      r = requests.get(url, auth=('XXX', 'XXXXXXXX))
       data_string= json.loads(r.text)
       lx=c
       sum=0
@@ -30,8 +30,8 @@ def listtype(a,b,c='public_ip'):
       print '=' * 52
       print '\033[0m'
 def listall(a,c='public_ip'):
-      url = "http://monitor.yottaa.com:8000/api/instance/instances/?format=json&limit=0&production_state=%d" %  a
-      r = requests.get(url, auth=('api', 'AtynccSCifmmgIoR'))
+      url = "http://XXXXXXXX:8000/api/instance/instances/?format=json&limit=0&production_state=%d" %  a
+      r = requests.get(url, auth=('XXXX', 'XXXXXXX'))
       data_string= json.loads(r.text)
       type=c
       sum=0
@@ -45,9 +45,8 @@ def listall(a,c='public_ip'):
       print '\033[0m'
 
 def hosts(a,b):
-    url = "http://monitor.yottaa.com:8000/api/instance/instances/?format=json&limit=0&production_state=%s&hostname=%s" % (a,b)
-    r = requests.get(url, auth=('api', 'AtynccSCifmmgIoR'))
-    data_string= json.loads(r.text)
+    url = "http://XXXXXXXX:8000/api/instance/instances/?format=json&limit=0&production_state=%s&hostname=%s" % (a,b)
+    r = requests.get(url, auth=('XXXX', 'XXXXXXX'))
     result = data_string['objects']
     print '\033[1;31;40m'
     print '=' * 52
