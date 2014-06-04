@@ -11,42 +11,43 @@ def startinfo():
     print '*ENVIRONMENT:\t',args['environment']
     print '*ROLE:\t\t',args['role']
     print '*ATTRIBUTE:\t',args['attribute']
+    print '*DATACENTER:\t',args['datacenter']
     print '*HOST:\t',args['Host']
+    print '=' * 52
+    print '\033[0m'
+def endinfo(sum):
+    print '\033[1;31;40m'
+    print '=' * 52
+    print '\tQuery number is\t', sum
     print '=' * 52
     print '\033[0m'
 
 def listtype(a,b,c='public_ip'):
-      url = "http://XXXXXXX:8000/api/instance/instances/?format=json&limit=0&production_state=%d&role=%d" %  (a,b)
-      r = requests.get(url, auth=('XXX', 'XXXXXXXX))
+      url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&production_state=%d&role=%d" %  (a,b)
+      r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
       data_string= json.loads(r.text)
       lx=c
       sum=0
       for ip in data_string["objects"]:
          sum = sum +1
          print ip[lx]
-      print '\033[1;31;40m'
-      print '=' * 52
-      print '\tQuery number is\t', sum
-      print '=' * 52
-      print '\033[0m'
+      endinfo(sum)
+
 def listall(a,c='public_ip'):
-      url = "http://XXXXXXXX:8000/api/instance/instances/?format=json&limit=0&production_state=%d" %  a
-      r = requests.get(url, auth=('XXXX', 'XXXXXXX'))
+      url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&production_state=%d" %  a
+      r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
       data_string= json.loads(r.text)
       type=c
       sum=0
       for ip in data_string["objects"]:
           sum = sum + 1
           print ip[type]
-      print '\033[1;31;40m'
-      print '=' * 52
-      print '\tQuery number is\t', sum
-      print '=' * 52
-      print '\033[0m'
+      endinfo(sum)
 
-def hosts(a,b):
-    url = "http://XXXXXXXX:8000/api/instance/instances/?format=json&limit=0&production_state=%s&hostname=%s" % (a,b)
-    r = requests.get(url, auth=('XXXX', 'XXXXXXX'))
+def hosts(a):
+    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&hostname=%s" % a
+    r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
+    data_string= json.loads(r.text)
     result = data_string['objects']
     print '\033[1;31;40m'
     print '=' * 52
@@ -54,19 +55,142 @@ def hosts(a,b):
     print '=' * 52
     print '\033[0m'
     print json.dumps(result,indent=4)
-   
+
+def yid(a):
+    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&yid=%s" % a
+    r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
+    data_string= json.loads(r.text)
+    result = data_string['objects']
+    print '\033[1;31;40m'
+    print '=' * 52
+    print '\tQuery  infomation for\t', args['yid']
+    print '=' * 52
+    print '\033[0m'
+    print json.dumps(result,indent=4) 
+
+def ip(a):
+    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&public_ip=%s" % a
+    r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
+    data_string= json.loads(r.text)
+    result = data_string['objects']
+    print '\033[1;31;40m'
+    print '=' * 52
+    print '\tQuery  infomation for\t', args['ip']
+    print '=' * 52
+    print '\033[0m'
+    print json.dumps(result,indent=4)
+
+def datacenter(a,b,c="hostname"):
+    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&production_state=%s&data_center=%s" % (a,b)
+    r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
+    data_string= json.loads(r.text)
+    type=c
+    sum=0
+    for ip in data_string["objects"]:
+         sum = sum + 1
+         print ip[type]
+    endinfo(sum)
+
+def dataall(a,b="hostname"):
+    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&data_center=%s" % a 
+    r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
+    data_string= json.loads(r.text)
+    type=b
+    sum=0
+    for ip in data_string["objects"]:
+         sum = sum + 1
+         print ip[type]
+    endinfo(sum)
+
+def dataxxx(a,b,c="hostname"):
+    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&data_center=%s&role=%s" % (a,b)
+    r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
+    data_string= json.loads(r.text)
+    type=c
+    sum=0
+    for ip in data_string["objects"]:
+         sum = sum + 1
+         print ip[type]
+    endinfo(sum)
+
+def datarole(a,b,c,d="hostname"):
+    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&production_state=%s&data_center=%s&role=%s" % (a,b,c)
+    r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
+    data_string= json.loads(r.text)
+    type=d
+    sum=0
+    for ip in data_string["objects"]:
+         sum = sum + 1
+         print ip[type]
+    endinfo(sum)
+
+def all(a="hostname"):
+    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0"
+    r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
+    data_string= json.loads(r.text)
+    type=a
+    sum=0
+    for ip in data_string["objects"]:
+         sum = sum + 1
+         print ip[type]
+    endinfo(sum)    
+
+
+def roleall(a,c="hostname"):
+    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&role=%s" % a
+    r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
+    data_string= json.loads(r.text)
+    type=c
+    sum=0
+    for ip in data_string["objects"]:
+         sum = sum + 1
+         print ip[type]
+    endinfo(sum)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-r', '--role',        help='hosts role vars ex:lb tpu tmu dpu varnish ....')
     parser.add_argument('-e', '--environment', help='host  environment vars ex:production  stageing ')
     parser.add_argument('-a', '--attribute',   help='host attribute vars ex: public_ip instance_type topo_name hostname ....')
+    parser.add_argument('-d', '--datacenter',   help='datacentr info ex:US-EAST-1 US-WEST-1 AP-SOUTHEAST-1  AP-NORTHEAST-1')
     parser.add_argument('-H', '--Host',   help=' hostname')
-
+    parser.add_argument('-Y', '--yid',   help=' yid')
+    parser.add_argument('-I', '--ip',    help=' ip address')
+    parser.add_argument('-A', '--all',    help='list all host')
     args = vars(parser.parse_args())
     startinfo()
+
     typedict={'lb':1,'tpu':2,'tmu':3,'mca':4,'varnish':5,'dpu':6,'log':7,'cassandra':8,'mca-win':9,'zk':10,'ops':11,'mongodb':12,'mca-win-az':13,'elasticsearch':14,'mca-win-wmi':15}
-    if args['environment'] == "production" and args['role']:
+    datacenterdict={"US-EAST-1":'01',"US-WEST-1":'02','EU-WEST-1':'03','AP-SOUTHEAST-1':'04','AP-NORTHEAST-1':'05','US-WEST-2':'06','SA-EAST-1':'07','US-CHICAGO':'08','US-MIAMI':'09','AP-BJ':'10','US-DALLAS':'11','EU-UK':'12','EU-GERMANY':'13','AP-HONGKONG':'14','DAL2':'15','US-NYC':'16','EU-AMS':'17','AP-SIN':'18','AP-SOUTHEAST-2':'19','US-SJC':'20'}
+
+    if args['environment'] == "production" and args['datacenter'] and args['role']:
+      center=args['datacenter']
+      if center.islower():
+         center=center.upper()
+      zhi=args['role']
+      cha=datacenterdict[center]
+      role=typedict[zhi]
+      if args['attribute']:
+         objects=args['attribute']
+         datarole(1,cha,role,objects)
+      else:
+         datarole(1,cha,role)
+
+
+    elif args['environment'] == "stageing" and args['datacenter'] and args['role']:
+      center=args['datacenter']
+      if center.islower():
+         center=center.upper()
+      zhi=args['role']
+      cha=datacenterdict[center]
+      role=typedict[zhi]
+      if args['attribute']:
+         objects=args['attribute']
+         datarole(2,cha,role,objects)
+      else:
+         datarole(2,cha,role)
+
+    elif args['environment'] == "production" and args['role']:
       zhi=args['role']
       cha=typedict[zhi]
       if args['attribute']:
@@ -82,13 +206,64 @@ if __name__ == '__main__':
          listtype(1,cha,objects)
       else:
          listtype(2,cha)
-    elif args['environment'] == "stageing" and  args['Host']:
-      hostname=args['Host']
-      hosts(2,hostname)
 
-    elif args['environment'] == "production" and  args['Host']:
+    elif args['datacenter'] and args['role']:
+      zhi=args['role']
+      center=args['datacenter']
+      if center.islower():
+         center=center.upper()
+      cha=typedict[zhi]
+      value=datacenterdict[center]
+      if args['attribute']:
+         objects=args['attribute']
+         dataxxx(value,cha,objects)
+      else:
+         dataxxx(value,cha)
+
+    elif args['environment'] == "production" and args['datacenter']:
+      center=args['datacenter']
+      if center.islower():
+         center=center.upper()
+      cha=datacenterdict[center]
+      if args['attribute']:
+         objects=args['attribute']
+         datacenter(1,cha,objects)
+      else:
+         datacenter(1,cha)
+
+    elif args['environment'] == "stageing" and args['datacenter']:
+      center=args['datacenter']
+      if center.islower():
+         center=center.upper()
+      cha=datacenterdict[center]
+      if args['attribute']:
+         objects=args['attribute']
+         datacenter(2,cha,objects)
+      else:
+         datacenter(2,cha)
+
+    elif args['datacenter']:
+      center=args['datacenter']
+      if center.islower():
+         center=center.upper()
+      cha=datacenterdict[center]
+      if args['attribute']:
+         objects=args['attribute']
+         dataall(cha,objects)
+      else:
+         dataall(cha)
+        
+    elif args['Host']:
       hostname=args['Host']
-      hosts(1,hostname)
+      hosts(hostname)
+
+    elif args['yid']:
+      YID=args['yid']
+      yid(YID)
+    
+    elif args['ip']:
+      IP=args['ip']
+      ip(IP)
 
     elif args['environment'] == "production":
       if args['attribute']:
@@ -102,6 +277,22 @@ if __name__ == '__main__':
          listall(2,objects)
       else:
         listall(2)
+   
+    elif args['role']:
+      zhi=args['role']
+      cha=typedict[zhi]
+      if args['attribute']:
+         objects=args['attribute']
+         roleall(cha,objects)
+      else:
+         roleall(cha) 
+
+    elif args['all']:
+      if args['attribute']:
+        objects=args['attribute']
+        all(objects)
+      else:
+        all()
     else:
       parser.print_help()
       sys.exit()
