@@ -1,4 +1,4 @@
-vpnid:  HKVPN
+vpnid:  VJOPENVPN
 network: 172.16.101.0
 netmask: 255.255.255.0
 device: eth0
