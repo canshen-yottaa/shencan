@@ -2,8 +2,12 @@ Include=/etc/zabbix/zabbix_agentd.d/
 PidFile=/var/run/zabbix/zabbix_agentd.pid
 LogFile=/var/log/zabbix/zabbix_agentd.log
 ListenPort=10050
-Server= {{ zabbixserver }}
-Hostname= {{ publicip }}
+{% if company_dc.startswith('ap') %}
+Server=zabbix-proxy-singapore.yottaa.com
+{% else %}
+Server=zabbix.yottaa.com
+{% endif %}
+Hostname={{ company_publicip }}
 EnableRemoteCommands=1
 LogRemoteCommands=1
 

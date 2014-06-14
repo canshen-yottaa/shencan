@@ -1,5 +1,5 @@
 ---
-  - hosts: yottaa.shencan.net
+  - hosts: openvpn 
     roles:
       - epel
       - install
