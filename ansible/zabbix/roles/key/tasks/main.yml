@@ -1,5 +1,0 @@
----
- - name: sync key
-   authorized_key: user=cpis1 key="{{ lookup('file', '/home/cpis1/.ssh/id_rsa.pub') }}"
-   tags:
-    - key

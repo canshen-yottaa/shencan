@@ -1,6 +1,4 @@
 ---
   - hosts: openvpn 
     roles:
-      - epel
-      - install
-      - key
+      - zabbix
