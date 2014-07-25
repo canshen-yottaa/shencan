@@ -1,0 +1,4 @@
+---
+  - hosts: router-api 
+    roles:
+      - openstack-init

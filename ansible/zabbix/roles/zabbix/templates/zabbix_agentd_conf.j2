@@ -1,0 +1,23 @@
+Include=/etc/zabbix/zabbix_agentd.d/
+PidFile=/var/run/zabbix/zabbix_agentd.pid
+LogFile=/var/log/zabbix/zabbix_agentd.log
+ListenPort=10050
+{% if company_dc.startswith('ap') %}
+Server=zabbix-proxy-singapore.yottaa.com
+{% else %}
+Server=zabbix.yottaa.com
+{% endif %}
+Hostname={{ company_publicip }}
+EnableRemoteCommands=1
+LogRemoteCommands=1
+
+UserParameter=io.discoverdisk[*],/etc/zabbix/discover_disk.sh $1
+UserParameter=io.rps[*],/usr/bin/tail /tmp/iostat_output |grep "\b$1\b"|tail -1|awk '{print $$4}'
+UserParameter=io.wps[*],/usr/bin/tail /tmp/iostat_output |grep "\b$1\b" |tail -1|awk '{print $$5}'
+UserParameter=io.rMBps[*],/usr/bin/tail /tmp/iostat_output |grep "\b$1\b" |tail -1|awk '{print $$6}'
+UserParameter=io.wMBps[*],/usr/bin/tail /tmp/iostat_output |grep "\b$1\b" |tail -1|awk '{print $$7}'
+UserParameter=io.avgrq-sz[*],/usr/bin/tail /tmp/iostat_output |grep "\b$1\b" |tail -1|awk '{print $$8}'
+UserParameter=io.avgqu-sz[*],/usr/bin/tail /tmp/iostat_output |grep "\b$1\b" |tail -1|awk '{print $$9}'
+UserParameter=io.await[*],/usr/bin/tail /tmp/iostat_output |grep "\b$1\b" |tail -1|awk '{print $$10}'
+UserParameter=io.svctm[*],/usr/bin/tail /tmp/iostat_output |grep "\b$1\b" |tail -1|awk '{print $$11}'
+UserParameter=io.util[*],/usr/bin/tail /tmp/iostat_output |grep "\b$1\b" |tail -1|awk '{print $$12}'

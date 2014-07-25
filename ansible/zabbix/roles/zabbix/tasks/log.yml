@@ -1,0 +1,8 @@
+---
+ - name: check log crontab
+   shell: grep 'find /tmp -name zabbix* -mtime +3 -exec rm -f {} \;'  /var/spool/cron/root |wc -l
+   register: log_crontab_file
+
+ - name: clean log crontab
+   cron: name="zabbix log clean crontab" minute=0  hour=0 job="find /tmp -name zabbix* -mtime +3 -exec rm -f {} \;" user=root
+   when: log_crontab_file.stdout == 0

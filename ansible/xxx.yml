@@ -1,0 +1,10 @@
+---
+ - hosts: all
+   tasks:
+      - name: xxx
+        shell: ls -l shencan |wc -l
+        register: jb
+      - name: yyy
+        shell: echo 1 >/tmp/cpis
+        when: jb.stdout == "1"
+

@@ -1,0 +1,6 @@
+[yottaa-puppet-dependencies]
+name=Yottaa Puppet Dependencies Repo
+baseurl=http://yottaa:tyfEzowd4@repo.yottaa.com/PuppetRPM/$releasever/dependencies/$basearch
+enabled=1
+gpgcheck=0
+priority=1

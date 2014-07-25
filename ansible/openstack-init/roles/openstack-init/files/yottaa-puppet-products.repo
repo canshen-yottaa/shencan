@@ -1,0 +1,6 @@
+[yottaa-puppet-products]
+name=Yottaa Puppet Products Repo
+baseurl=http://yottaa:tyfEzowd4@repo.yottaa.com/PuppetRPM/$releasever/products/$basearch
+enabled=1
+gpgcheck=0
+priority=1

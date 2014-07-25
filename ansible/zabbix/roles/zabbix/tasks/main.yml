@@ -1,0 +1,57 @@
+---
+ - name: run custom modules and collect custom facts
+   yottaa: cmd=whoami
+
+ - name: Yum install zabbix-agent
+   yum : name={{ item }} state=present
+   with_items:
+   - zabbix-agent
+
+ - name: make sure /etc/zabbix directory
+   file: name=/etc/zabbix state=directory
+
+ - name: copy discover_disk.sh files
+   copy: src=discover_disk.sh dest=/etc/zabbix/discover_disk.sh  mode=0777
+
+ - name: copy  zabbix_function.py files
+   copy: src=zabbix_function.py dest=/etc/zabbix/zabbix_function.py mode=0777
+
+ - name: check zabbix iostat crontab
+   shell: grep 'nohup iostat -m -x -d >/tmp/iostat_output'  /var/spool/cron/root |wc -l
+   register: iostat_crontab_file
+
+ - name: set zabbix crontab
+   cron: name="zabbix crontab" minute="*/2" job="nohup iostat -m -x -d >/tmp/iostat_output" user=root
+   when: iostat_crontab_file == 0
+
+# - name: custom geographic  facter
+#   shell: cat /etc/company.facts |grep dc |cut -d"=" -f2
+#   register: datacenter
+
+ - name: copy /etc/zabbix/zabbix_socket_sender.py when role=ap
+   copy: src=zabbix_socket_sender.py   dest=/etc/zabbix/zabbix_socket_sender-ap.py  mode=0777
+   when: company_dc.find('ap') == 0
+
+ - name: copy /etc/zabbix/zabbix_socket_sender.py  when role is not ap
+   copy: src=zabbix_socket_sender-ap.py  dest=/etc/zabbix/zabbix_socket_sender.py mode=0777
+   when: company_dc.find('ap') != 0
+
+# - name: custom app facter
+#   shell: cat /etc/company.facts |grep role |cut -d"=" -f2
+#   register: apps
+ 
+ - include: lb.yml
+   when: company_role == "lb"
+
+ - include: tpu.yml
+   when: company_role == "tpu"
+
+ - include: tmu.yml
+   when: company_role == "tmu"
+
+ - name: copy zabbix_agentd.conf file
+   template: src=zabbix_agentd_conf.j2  dest=/etc/zabbix/zabbix_agentd.conf
+   notify: restart zabbix-agent
+
+ - name: make sure zabbix-agent running
+   service: name=zabbix-agent state=started enabled=yes

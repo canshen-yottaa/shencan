@@ -1,0 +1,9 @@
+role =  {{ ansible_hostname.split(".")[0] }}            
+product = optimizer
+env = stage                    
+dc = us-east                  
+provider = YO
+topo = sys-2
+publicip = {{ public_ip.stdout  }}
+certname =  {{ ansible_hostname }}.yottaa.com
+tag = feature

@@ -1,0 +1,18 @@
+---
+- hosts: all
+  tasks:
+   - name: Yum install package from repo
+     yum: name={{ item }} state=present
+     with_items:
+     - bind-utils
+     - wget
+     - htop
+     - nload
+   - name: yum install nmon rhel6 from urls
+     yum: name=ftp://ftp.univie.ac.at/systems/linux/dag/redhat/el6/en/x86_64/dag/RPMS/nmon-14g-1.el6.rf.x86_64.rpm state=present
+     when: ansible_distribution_version.startswith('6')
+
+   - name: yum install nmon rhel5 from urls
+     yum: name=ftp://ftp.univie.ac.at/systems/linux/dag/redhat/el5/en/x86_64/dag/RPMS/nmon-14g-1.el5.rf.x86_64.rpm state=present
+     when: ansible_distribution_version.startswith('5')
+

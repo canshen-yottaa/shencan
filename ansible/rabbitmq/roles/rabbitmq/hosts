@@ -1,0 +1,2 @@
+shencan-rabbitmq-01   ansible_ssh_user=root     ansible_ssh_private_key_file="~/key/Yottaa-Stage-v1307.pem"
+shencan-rabbitmq-02   ansible_ssh_user=root     ansible_ssh_private_key_file="~/key/Yottaa-Stage-v1307.pem"

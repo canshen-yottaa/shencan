@@ -1,0 +1,49 @@
+---
+
+  - name:  copy some files
+    copy:  src={{ item.src }}  dest={{ item.dest }}  owner=root group=root
+    with_items:
+     - {
+        src: "epel-erlang.repo",
+        dest: "/etc/yum.repos.d/epel-erlang.repo"
+      }
+      - {
+        src: "rabbitmq-signing-key-public.asc",
+        dest: "/root/rabbitmq-signing-key-public.asc"
+      }
+      - {
+        src: "rabbitmq-server-3.3.4-1.noarch.rpm",
+        dest: "/root/rabbitmq-server-3.3.4-1.noarch.rpm"
+      }
+
+  - name: Install  erlang
+    yum:  name=erlang state=present enablerepo=epel-erlang
+
+  - name: check rabbiqmq-server version
+    shell:  rpm -qa rabbitmq-server
+    register: version
+
+  - name: import rabbitmq-signing-key-public.asc
+    shell: rpm --import /root/rabbitmq-signing-key-public.asc
+
+  - name: Install rabbitmq-server
+    yum: name=/root/rabbitmq-server-3.3.4-1.noarch.rpm  state=present
+    when: version.stdout !=  "rabbitmq-server-3.3.4-1.noarch"
+
+  - name: copy rabbitmq.config template
+    templates: src=rabbitmq.config  dest=/etc/rabbitmq/rabbitmq.config  owner=root group=root
+
+  - name: enable rabbitmq_management plugin
+    rabbitmq_plugin: names=rabbitmq_management state=enabled
+
+  - name: ensure rabbitmq server running
+    service:  name=rabbitmq-server  state=started  enabled=yes
+
+
+
+
+
+
+
+
+
