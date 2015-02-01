@@ -34,7 +34,7 @@ def listtype(a,b,c='public_ip'):
       endinfo(sum)
 
 def listall(a,c='public_ip'):
-      url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&production_state=%d" %  a
+      url = "http://XXXXXXXX:8000/XXXXX/instance/instances/?format=json&limit=0&production_state=%d" %  a
       r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
       data_string= json.loads(r.text)
       type=c
@@ -45,7 +45,7 @@ def listall(a,c='public_ip'):
       endinfo(sum)
 
 def hosts(a):
-    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&hostname=%s" % a
+    url = "http://XXXXX:8000/XXXXX/instance/instances/?format=json&limit=0&hostname=%s" % a
     r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
     data_string= json.loads(r.text)
     result = data_string['objects']
@@ -57,7 +57,7 @@ def hosts(a):
     print json.dumps(result,indent=4)
 
 def yid(a):
-    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&yid=%s" % a
+    url = "http://XXXXXX:8000/XXXXX/instance/instances/?format=json&limit=0&yid=%s" % a
     r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
     data_string= json.loads(r.text)
     result = data_string['objects']
@@ -69,7 +69,7 @@ def yid(a):
     print json.dumps(result,indent=4) 
 
 def ip(a):
-    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&public_ip=%s" % a
+    url = "http://XXXXXX:8000/XXXXX/instance/instances/?format=json&limit=0&public_ip=%s" % a
     r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
     data_string= json.loads(r.text)
     result = data_string['objects']
@@ -81,7 +81,7 @@ def ip(a):
     print json.dumps(result,indent=4)
 
 def datacenter(a,b,c="hostname"):
-    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&production_state=%s&data_center=%s" % (a,b)
+    url = "http://XXXXXXXX:8000/XXXXX/instance/instances/?format=json&limit=0&production_state=%s&data_center=%s" % (a,b)
     r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
     data_string= json.loads(r.text)
     type=c
@@ -103,7 +103,7 @@ def dataall(a,b="hostname"):
     endinfo(sum)
 
 def dataxxx(a,b,c="hostname"):
-    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&data_center=%s&role=%s" % (a,b)
+    url = "http://XXXXXXX:8000/XXXXX/instance/instances/?format=json&limit=0&data_center=%s&role=%s" % (a,b)
     r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
     data_string= json.loads(r.text)
     type=c
@@ -114,7 +114,7 @@ def dataxxx(a,b,c="hostname"):
     endinfo(sum)
 
 def datarole(a,b,c,d="hostname"):
-    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&production_state=%s&data_center=%s&role=%s" % (a,b,c)
+    url = "http://XXXXXX:8000/XXXXX/instance/instances/?format=json&limit=0&production_state=%s&data_center=%s&role=%s" % (a,b,c)
     r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
     data_string= json.loads(r.text)
     type=d
@@ -125,7 +125,7 @@ def datarole(a,b,c,d="hostname"):
     endinfo(sum)
 
 def all(a="hostname"):
-    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0"
+    url = "http://XXXXXX:8000/XXXXX/instance/instances/?format=json&limit=0"
     r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
     data_string= json.loads(r.text)
     type=a
@@ -137,7 +137,7 @@ def all(a="hostname"):
 
 
 def roleall(a,c="hostname"):
-    url = "http://monitor.yottaa.com:8000/XXXXX/instance/instances/?format=json&limit=0&role=%s" % a
+    url = "http://XXXXXXX:8000/XXXXX/instance/instances/?format=json&limit=0&role=%s" % a
     r = requests.get(url, auth=('XXXXX', 'XXXXXXXXX'))
     data_string= json.loads(r.text)
     type=c
@@ -160,7 +160,7 @@ if __name__ == '__main__':
     args = vars(parser.parse_args())
     startinfo()
 
-    typedict={'lb':1,'tpu':2,'tmu':3,'mca':4,'varnish':5,'dpu':6,'log':7,'cassandra':8,'mca-win':9,'zk':10,'ops':11,'mongodb':12,'mca-win-az':13,'elasticsearch':14,'mca-win-wmi':15}
+    typedict={'lb':1,'X':2,'X':3,'X':4,'X':5,'X':6,'X':7,'X':8,'X':9,'X':10,'X':11,'X':12,'X':13,'X':14,'X':15}
     datacenterdict={"US-EAST-1":'01',"US-WEST-1":'02','EU-WEST-1':'03','AP-SOUTHEAST-1':'04','AP-NORTHEAST-1':'05','US-WEST-2':'06','SA-EAST-1':'07','US-CHICAGO':'08','US-MIAMI':'09','AP-BJ':'10','US-DALLAS':'11','EU-UK':'12','EU-GERMANY':'13','AP-HONGKONG':'14','DAL2':'15','US-NYC':'16','EU-AMS':'17','AP-SIN':'18','AP-SOUTHEAST-2':'19','US-SJC':'20'}
 
     if args['environment'] == "production" and args['datacenter'] and args['role']:
